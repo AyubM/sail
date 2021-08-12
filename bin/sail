@@ -251,6 +251,18 @@ if [ $# -gt 0 ]; then
         else
             sail_is_not_running
         fi
+        
+    # Initiate a root user MySQL CLI terminal session within the "mysql" container...
+    elif [ "$1" == "root-mysql" ]; then
+        shift 1
+
+        if [ "$EXEC" == "yes" ]; then
+            docker-compose exec \
+                mysql \
+                bash -c 'MYSQL_PWD=password mysql -u root'
+        else
+            sail_is_not_running
+        fi
 
     # Initiate a MySQL CLI terminal session within the "mariadb" container...
     elif [ "$1" == "mariadb" ]; then
@@ -260,6 +272,18 @@ if [ $# -gt 0 ]; then
             docker-compose exec \
                 mariadb \
                 bash -c 'MYSQL_PWD=${MYSQL_PASSWORD} mysql -u ${MYSQL_USER} ${MYSQL_DATABASE}'
+        else
+            sail_is_not_running
+        fi
+        
+    # Initiate a root user MySQL CLI terminal session within the "mariadb" container...
+    elif [ "$1" == "root-mariadb" ]; then
+        shift 1
+
+        if [ "$EXEC" == "yes" ]; then
+            docker-compose exec \
+                mariadb \
+                bash -c 'MYSQL_PWD=password mysql -u root'
         else
             sail_is_not_running
         fi
